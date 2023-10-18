@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { faker } from "@faker-js/faker";
-import { PostProvider, PostContext } from "./PostContext";
+import { PostProvider, usePosts } from "./PostContext";
 
 function createRandomPost() {
   return {
@@ -39,7 +39,7 @@ function App() {
 
 function Header() {
   //consuming context value
-  const { onClearPosts } = useContext(PostContext);
+  const { onClearPosts } = usePosts();
 
   return (
     <header>
@@ -56,7 +56,7 @@ function Header() {
 }
 
 function SearchPosts() {
-  const { searchQuery, setSearchQuery } = useContext(PostContext);
+  const { searchQuery, setSearchQuery } = usePosts();
   return (
     <input
       value={searchQuery}
@@ -67,12 +67,12 @@ function SearchPosts() {
 }
 
 function Results() {
-  const { posts } = useContext(PostContext);
+  const { posts } = usePosts();
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
 function Main() {
-  const { posts, onAddPost } = useContext(PostContext);
+  const { posts, onAddPost } = usePosts();
   return (
     <main>
       <FormAddPost onAddPost={onAddPost} />
@@ -82,7 +82,7 @@ function Main() {
 }
 
 function Posts() {
-  const { posts } = useContext(PostContext);
+  const { posts } = usePosts();
   return (
     <section>
       <List posts={posts} />
@@ -101,7 +101,7 @@ function FormAddPost() {
     setTitle("");
     setBody("");
   };
-  const { onAddPost } = useContext(PostContext);
+  const { onAddPost } = usePosts();
   return (
     <form onSubmit={handleSubmit}>
       <input
@@ -120,7 +120,7 @@ function FormAddPost() {
 }
 
 function List() {
-  const { posts } = useContext(PostContext);
+  const { posts } = usePosts();
   return (
     <ul>
       {posts.map((post, i) => (
@@ -141,7 +141,7 @@ function Archive() {
   );
 
   const [showArchive, setShowArchive] = useState(false);
-  const { onAddPost } = useContext(PostContext);
+  const { onAddPost } = usePosts();
   return (
     <aside>
       <h2>Post archive</h2>
